@@ -14,11 +14,13 @@ yargs.command({
     },
     handler(argv){
         geolocation(argv.location,(error, response) => {
+ 
+            var {address} = response 
 
             if(error)
                 return console.log(error)
         
-            forecast(response.address, (error, response) => {
+            forecast(address, (error, response) => {
                 if(error)
                     return console.log(error)
         

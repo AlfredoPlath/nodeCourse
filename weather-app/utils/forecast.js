@@ -2,22 +2,22 @@ const postmanRequest = require('postman-request')
 
 const forecast = (location, callback) => {
 
-    const weaterUrl="http://api.weatherstack.com/current?access_key=0d9bbfef9cc4c29dfe9e8db322c0cd96&query="+location
+    const url="http://api.weatherstack.com/current?access_key=0d9bbfef9cc4c29dfe9e8db322c0cd96&query="+location
     
-    postmanRequest({url:weaterUrl, json:true},(error,response)=>{
-        if(!response)
+    postmanRequest({url, json:true},(error,{body})=>{
+        if(!body)
         {
             callback("Couldn't get any response", undefined)
         }
-        else if(response.body.length==0){
+        else if(body.length==0){
             callback("Could not find weather", undefined)
         }
-        else if(!response.body.current)
+        else if(!body.current)
         {
             callback("There was a problem to request the data", undefined)
         }
         else{
-            callback(undefined,"It is currently " + response.body.current.temperature + " degrees out. It feels like " + response.body.current.feelslike + " degrees out.")
+            callback(undefined,"It is currently " + body.current.temperature + " degrees out. It feels like " + body.current.feelslike + " degrees out.")
         }
     })
     }
